@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,13 +24,10 @@ public class HomeController {
     private final SessionManager sessionManager;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Long memberId, Model model) {
+    public String home(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member
+            , Long memberId, Model model) {
 
-        HttpSession session = request.getSession(false);
-        if (session == null)
-            return "home";
-
-        Member member = (Member)session.getAttribute(SessionConst.LOGIN_MEMBER);
         if (member == null)
             return "home";
 
