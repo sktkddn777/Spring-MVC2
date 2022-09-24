@@ -2,6 +2,7 @@ package hello.login.web;
 
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
+import hello.login.web.session.SessionConst;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -23,9 +25,11 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpServletRequest request, Long memberId, Model model) {
 
-        // session 에 저장된 정보 조회
-        Member member = (Member)sessionManager.getSession(request);
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "home";
 
+        Member member = (Member)session.getAttribute(SessionConst.LOGIN_MEMBER);
         if (member == null)
             return "home";
 
