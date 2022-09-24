@@ -12,15 +12,15 @@ public class Item {
 
     private Long id;
 
-    @NotBlank
+//    @NotBlank
     private String itemName;
 
-    @NotNull
-    @Range(min=1000, max=1000000)
+//    @NotNull
+//    @Range(min=1000, max=1000000)
     private Integer price;
 
-    @NotNull
-    @Max(9999)
+//    @NotNull
+//    @Max(9999)
     private Integer quantity;
 
     public Item() {
