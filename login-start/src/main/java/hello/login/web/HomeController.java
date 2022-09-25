@@ -2,6 +2,7 @@ package hello.login.web;
 
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
+import hello.login.web.argumentResolver.Login;
 import hello.login.web.session.SessionConst;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
@@ -23,15 +24,26 @@ public class HomeController {
     private final MemberRepository memberRepository;
     private final SessionManager sessionManager;
 
-    @GetMapping("/")
-    public String home(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member
-            , Long memberId, Model model) {
+//    @GetMapping("/")
+//    public String home(
+//            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member
+//            , Long memberId, Model model) {
+//
+//        if (member == null)
+//            return "home";
+//
+//        model.addAttribute("member", member);
+//        return "loginHome";
+//    }
 
-        if (member == null)
+    @GetMapping("/")
+    public String home(@Login Member loginMember, Model model) {
+
+        if (loginMember == null)
             return "home";
 
-        model.addAttribute("member", member);
+        model.addAttribute("member", loginMember);
         return "loginHome";
     }
+
 }
