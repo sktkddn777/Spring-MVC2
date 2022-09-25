@@ -20,4 +20,9 @@ public class ServletExController {
     public void error404(HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, "404 error");
     }
+
+    @GetMapping("/error-403")
+    public void error403(HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "403 error");
+    }
 }
