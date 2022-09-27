@@ -13,30 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ApiExceptionV2Controller {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResult illegalExHandler(IllegalArgumentException e) {
-        log.error("exceptionHandler ex", e);
-        return new ErrorResult("bad", e.getMessage());
-        // 정상적으로 리턴하고 json 으로 반환하면서 끝남
-        // was 도 정상응답으로 나감
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResult> userExHandler(UserException e) {
-        log.error("exceptionHandler ex", e);
-        ErrorResult errorResult = new ErrorResult("user-ex", e.getMessage());
-        return new ResponseEntity(errorResult, HttpStatus.BAD_REQUEST);
-    }
-
-    // 다른 exceptionHandler 가 처리하지 못한 가장 넓은 범위의 에러
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public ErrorResult exHandler(Exception e) {
-        log.error("internal exceptionHandler ex", e);
-        return new ErrorResult("server error :(", e.getMessage());
-    }
-
     @GetMapping("/api2/members/{id}")
     public MemberDto getMember(@PathVariable("id") String id) {
         if (id.equals("ex"))
